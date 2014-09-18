@@ -30,3 +30,8 @@ node_modules
 # Users Environment Variables
 .lock-wscript
 
+#Config 
+config.js
+
+#Links
+links/

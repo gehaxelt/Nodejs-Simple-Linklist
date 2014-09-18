@@ -2,6 +2,23 @@ doctype html
 html
   head
     title= title
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
+    link(rel='stylesheet', href='/stylesheets/treeview.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    nav.navbar.navbar-default(role='navigation')
+        .container-fluid
+            .navbar-header
+              button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+                span.sr-only Toggle navigation
+              a.navbar-brand(href='/')= title
+            #bs-example-navbar-collapse-1.collapse.navbar-collapse
+              ul.nav.navbar-nav.navbar-right
+                li
+                  a(href='#') GitHub
     block content
+    script(src='/javascripts/jquery-1.11.0.min.js')
+    script(src='/javascripts/jquery-migrate-1.2.1.min.js')
+    script(src='/javascripts/bootstrap.min.js')
+    script(src='/javascripts/app.js')
