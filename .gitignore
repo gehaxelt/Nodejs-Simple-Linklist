@@ -35,3 +35,6 @@ config.js
 
 #Links
 links/
+
+#Cache
+cache/

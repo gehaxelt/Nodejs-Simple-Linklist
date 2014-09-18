@@ -21,6 +21,18 @@
     margin: 0;
     list-style: none;
 }
+
+.css-treeview li {
+    margin-top: 2px;
+}
+
+.css-treeview .folder label {
+    border-bottom: 1px solid #9E9E9E;
+}
+
+.css-treeview .folder label:hover {
+    border-bottom-style: dotted;
+}
  
 .css-treeview input
 {
@@ -62,7 +74,12 @@
 {
     cursor: pointer;
 }
- 
+
+.css-treeview label {
+    display: inline-block;  
+    width: 100%;
+}
+
 .css-treeview input:disabled + label
 {
     cursor: default;

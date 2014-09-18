@@ -1,5 +1,6 @@
 module.exports = {
-  port: 3000,
-  host: "127.0.0.1",
-  title: "Simple link list",
+  port: 3000, //Port to listen on
+  host: "127.0.0.1", //IP to bind to
+  title: "Simple link list", //Title of the link list
+  ramcache: true, //For ram caching: true - otherwise cached to disk
 }

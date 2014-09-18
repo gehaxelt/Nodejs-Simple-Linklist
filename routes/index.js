@@ -3,15 +3,67 @@ var router = express.Router();
 var fs = require('fs');
 var path = require('path');
 var config = require('../config');
+var ramcache = null;
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  var linkspath = path.join(__dirname, "../links") + "/";
-  res.render('index', { title: config.title, treeview: renderdir(linkspath) });
+
+  if(updateAvailable() || readCache() == null ) {
+    updateCache();
+  }
+
+  res.render('index', { title: config.title, treeview: readCache() });
 });
 
-var dircount = 0;
 
+function updateAvailable() {
+  var updatefile = path.join(__dirname, "../links") + "/update.txt";
+  var updateexists = fs.existsSync(updatefile);
+  
+  if(updateexists) {
+    return true;
+  }
+
+  return false;
+}
+
+function readCache() {
+  if(config.ramcache) {
+    return ramcache;
+  } else {
+    var cachefile = path.join(__dirname, "../cache") + "/treeview.cached";
+    
+    if(!fs.existsSync(cachefile)) {
+      return null;
+    }
+
+    var content = fs.readFileSync(cachefile, 'utf8');
+    if(content) {
+      return content;
+    }
+
+    return null;
+  }
+}
+
+function updateCache() {
+  var linkspath = path.join(__dirname, "../links") + "/";
+  var treeviewhtml = renderdir(linkspath);
+
+  if(config.ramcache) {
+    ramcache = treeviewhtml;
+  } else {
+    var cachefile = path.join(__dirname, "../cache") + "/treeview.cached";
+    fs.writeFileSync(cachefile, treeviewhtml);
+  }
+
+  if(fs.existsSync(linkspath + "update.txt")) {
+    fs.unlinkSync(linkspath + "update.txt");
+  }
+}
+
+
+var dircount = 0;
 function renderdir(dirpath) {
   var files = fs.readdirSync(dirpath);
 
@@ -24,7 +76,7 @@ function renderdir(dirpath) {
     var name = htmlEscape(files[i]);
 
     if(stat.isDirectory()) {
-      renderedHTML += '<li><input type="checkbox" id="'+name+'_'+dircount+'" /><label for="'+name+'_'+dircount+'">'+name+'</label>'; 
+      renderedHTML += '<li class="folder"><input type="checkbox" id="'+name+'_'+dircount+'" /><label for="'+name+'_'+dircount+'">'+name+'</label>'; 
       dircount++;
       renderedHTML += renderdir(dirpath + "/" + files[i]);
       renderedHTML += "</li>";
