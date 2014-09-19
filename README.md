@@ -126,4 +126,4 @@ The application checks the existence of the ```links/update.txt``` file and recr
 
 #License
 
-- TODO
+Licensed under GPLv3. See LICENSE.md for more information.
