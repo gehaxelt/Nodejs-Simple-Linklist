@@ -47,6 +47,10 @@ function readCache() {
 }
 
 function updateCache() {
+  if(fs.existsSync(linkspath + "update.txt")) {
+    fs.unlinkSync(linkspath + "update.txt");
+  }
+  
   var linkspath = path.join(__dirname, "../links") + "/";
   var treeviewhtml = renderdir(linkspath);
 
@@ -55,10 +59,6 @@ function updateCache() {
   } else {
     var cachefile = path.join(__dirname, "../cache") + "/treeview.cached";
     fs.writeFileSync(cachefile, treeviewhtml);
-  }
-
-  if(fs.existsSync(linkspath + "update.txt")) {
-    fs.unlinkSync(linkspath + "update.txt");
   }
 }
 
