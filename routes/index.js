@@ -47,11 +47,11 @@ function readCache() {
 }
 
 function updateCache() {
+  var linkspath = path.join(__dirname, "../links") + "/";
   if(fs.existsSync(linkspath + "update.txt")) {
     fs.unlinkSync(linkspath + "update.txt");
   }
   
-  var linkspath = path.join(__dirname, "../links") + "/";
   var treeviewhtml = renderdir(linkspath);
 
   if(config.ramcache) {
