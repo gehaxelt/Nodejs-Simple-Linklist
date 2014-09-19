@@ -54,15 +54,75 @@ chmod u+w cache links
 
 #Usage
 
-The usage is quite easy, as only an editor is required.
+The usage is quite easy, as only an editor is required. All (sub)folders and links are stored in the ```links``` directory. 
 
-##Creating new links
+```
+ls -lR links
+links:
+insgesamt 8
+drwxr-xr-x 2 gehaxelt users 4096 18. Sep 21:26 example-pages
+drwxr-xr-x 3 gehaxelt users 4096 18. Sep 21:25 nested
 
-- TODO
+links/example-pages:
+insgesamt 4
+-rw-r--r-- 1 gehaxelt users 43 18. Sep 21:26 example.com
+
+links/nested:
+insgesamt 4
+drwxr-xr-x 3 gehaxelt users 4096 18. Sep 21:25 folders
+
+links/nested/folders:
+insgesamt 4
+drwxr-xr-x 3 gehaxelt users 4096 18. Sep 21:25 are
+
+links/nested/folders/are:
+insgesamt 4
+drwxr-xr-x 2 gehaxelt users 4096 18. Sep 21:26 possible
+
+links/nested/folders/are/possible:
+insgesamt 4
+-rw-r--r-- 1 gehaxelt users 50 18. Sep 21:26 awesome.net
+```
+
+##Adding new folders
+
+To add a new (sub)folder, simply create a new directory in the ```links``` directory. 
+
+```
+mkdir -p links/nested/folders/are/possible
+```
+
+##Adding new entries
+
+To add a new entry you need to create a file in the correct (sub)directory. The filename is the displayed link name. The content of the file has to have the following formatting:
+
+```
+URL
+[Description]
+```
+
+For example: 
+
+```
+cat links/nested/folders/are/possible/awesome.net 
+http://awesome.net
+Nesting folders is awesome! :)
+```
+
+This will result in the following link:
+
+```
+<a href="http://awesome.net">awesome.net</a><span> - Nesting folders is awesome! :)</span>
+```
 
 ##Updating the website
 
-- TODO
+Usually, the cached website will be served to reduce Disk I/O. To update the cache follow these steps:
+
+- touch links/update.txt
+- Reload the website
+
+The application checks the existence of the ```links/update.txt``` file and recreates the cache if it exists. After an successful update, the file will be deleted. 
 
 #License
 
